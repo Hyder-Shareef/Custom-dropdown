@@ -1,0 +1,200 @@
+:root {
+  --bg-page: #f8fafc;
+  --bg-dropdown: #ffffff;
+  --bg-hover: #f1f5f9;
+  --bg-selected: #eff6ff;
+  --bg-selected-hover: #dbeafe;
+
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-placeholder: #94a3b8;
+  --text-selected: #2563eb;
+
+  --border-color: #cbd5e1;
+  --border-focus: #3b82f6;
+  --border-panel: #e2e8f0;
+
+  --shadow-panel: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.18);
+
+  --radius-input: 8px;
+  --radius-option: 6px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+.container {
+  width: 100%;
+  max-width: 360px;
+}
+
+.dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dropdown-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-trigger {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  background-color: var(--bg-dropdown);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-input);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  text-align: left;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  user-select: none;
+}
+
+.dropdown-trigger:hover {
+  border-color: #94a3b8;
+}
+
+.dropdown-trigger:focus-visible,
+.dropdown.open .dropdown-trigger {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: var(--focus-ring);
+}
+
+.selected-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected-text.placeholder {
+  color: var(--text-placeholder);
+}
+
+.dropdown.has-selection .selected-text {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.arrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  margin-left: 12px;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal), color var(--transition-fast);
+}
+
+.dropdown.open .arrow-icon {
+  transform: rotate(180deg);
+  color: var(--border-focus);
+}
+
+.dropdown-options {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  max-height: 240px;
+  overflow-y: auto;
+  background-color: var(--bg-dropdown);
+  border: 1px solid var(--border-panel);
+  border-radius: var(--radius-input);
+  box-shadow: var(--shadow-panel);
+  list-style: none;
+  padding: 6px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity var(--transition-normal), transform var(--transition-normal), visibility var(--transition-normal);
+}
+
+.dropdown.open .dropdown-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-option {
+  padding: 10px 12px;
+  border-radius: var(--radius-option);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  user-select: none;
+}
+
+.dropdown-option:hover,
+.dropdown-option.highlighted {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.dropdown-option.selected {
+  background-color: var(--bg-selected);
+  color: var(--text-selected);
+  font-weight: 500;
+}
+
+.dropdown-option.selected:hover,
+.dropdown-option.selected.highlighted {
+  background-color: var(--bg-selected-hover);
+}
+
+.check-icon {
+  display: none;
+  color: var(--text-selected);
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.dropdown-option.selected .check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
